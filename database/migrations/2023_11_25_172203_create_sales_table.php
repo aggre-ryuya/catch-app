@@ -14,14 +14,13 @@ return new class extends Migration
         Schema::create('sales', function (Blueprint $table) {
             $table->id()->comment('Id');
 
-            $table->string('users_id'); // 外部キーにはunsignedBigIntegerを使用
+            $table->bigInteger('users_id')->unsigned()->comment('ユーザーId');
+            $table->foreign('users_id')->references('id')->on('users');
 
-        $table->foreign('users_id')->references('id')->on('users')->comment('ユーザーId');
+            $table->bigInteger('stores_id')->unsigned()->comment('ストアId');
+            $table->foreign('stores_id')->references('id')->on('stores');
 
-        $table->bigInteger('stores_id')->unsigned();
-        $table->foreign('stores_id')->references('id')->on('stores')->comment('お店のId');
-
-            $table->string('customer_payment')->comment('Id');
+            $table->string('customer_payment')->comment('金額');
             $table->enum('deleted_at',[1,0])->comment('論理削除');
             $table->timestamp('created_at')->comment('作成日時');
             $table->timestamp('updated_at')->comment('更新日時');
