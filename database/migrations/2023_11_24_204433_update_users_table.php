@@ -12,16 +12,20 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->string('id')->comment('ID')->change();
-            $table->string('name', 15)->nullable(false)->comment('ユーザー名')->change();
-            $table->string('email', 255)->nullable()->comment('メールアドレス')->change();
-            $table->timestamp('email_verified_at')->nullable()->comment('メール確認可否')->change();
-            $table->string('password', 255)->comment('パスワード')->change();
-            $table->enum('role', [0, 1])->default(0)->nullable()->comment('権限')->after('password');;
-            $table->enum('deleted_at', [0, 1])->default(0)->nullable()->comment('論理削除')->after('role');
-            $table->rememberToken()->comment('認証トークン')->change();
-            $table->timestamp('created_at')->comment('作成日時')->change();
-            $table->timestamp('updated_at')->comment('更新日時')->change();
+            Schema::dropIfExists('users');
+        });
+
+        Schema::create('users', function (Blueprint $table) {
+            $table->id()->comment('Id');
+            $table->string('name', 15)->nullable(false)->comment('ユーザー名');
+            $table->string('email', 255)->nullable()->comment('メールアドレス');
+            $table->timestamp('email_verified_at')->nullable()->comment('メール確認可否');
+            $table->string('password', 255)->comment('パスワード');
+            $table->enum('role', [0, 1])->default(0)->nullable()->comment('権限');
+            $table->enum('deleted_at', [0, 1])->default(0)->nullable()->comment('論理削除');
+            $table->rememberToken()->comment('認証トークン');
+            $table->timestamp('created_at')->comment('作成日時');
+            $table->timestamp('updated_at')->comment('更新日時');
         });
     }
 
