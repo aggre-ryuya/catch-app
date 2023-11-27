@@ -21,6 +21,6 @@ class Store extends Model
      */
     public function getStoreData(): HasMany
     {
-        return $this->hasMany(Sales::class);
+        return $this->hasMany(Sale::class);
     }
 }
