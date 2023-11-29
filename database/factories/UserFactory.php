@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Facades\Hash;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\User>
@@ -35,7 +36,7 @@ class UserFactory extends Factory
             //
             'name' => $name,
             'email' => "test". self::$counter. "@gamil.com",
-            'password' => "password". self::$counter,
+            'password' => $password ??= Hash::make('password'),
             'role' => $role,
             'deleted_at' => $deleted_at,
         ];

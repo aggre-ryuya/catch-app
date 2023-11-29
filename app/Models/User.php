@@ -4,10 +4,13 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
+use Laravel\Sanctum\HasApiTokens;
 
 use Illuminate\Database\Eloquent\Model;
 
-class User extends Model
+class User extends Authenticatable
 {
     use HasFactory;
     protected $fillable = [
@@ -25,6 +28,6 @@ class User extends Model
      */
     public function getStoreData(): HasMany
     {
-        return $this->hasMany(Sale::class, 'users_id', 'id');
+        return $this->hasMany(Sale::class, 'users_id');
     }
 }
