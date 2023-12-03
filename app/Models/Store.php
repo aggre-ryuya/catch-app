@@ -15,12 +15,16 @@ class Store extends Model
         'role',
         'deleted_at',
     ];
-
     /**
+     * 
      * 売上データを取得
      */
-    public function getStoreData(): HasMany
+    public function sale(): HasMany
     {
-        return $this->hasMany(Sale::class);
+        return $this->hasMany(Sale::class, 'stores_id');
+    }
+    public function user()
+    {
+        return $this->hasMany(User::class, 'stores_id');
     }
 }

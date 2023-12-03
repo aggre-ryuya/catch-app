@@ -35,6 +35,7 @@ class UserFactory extends Factory
         return [
             //
             'name' => $name,
+            'stores_id' => 1,
             'email' => "test". self::$counter. "@gamil.com",
             'password' => $password ??= Hash::make('password'),
             'role' => $role,

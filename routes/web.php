@@ -7,8 +7,8 @@ use Inertia\Inertia;
 
 use App\Http\Controllers\UserController;
 
-Route::resource('users',UserController::class)
-->middleware(['auth', 'verified']);
+Route::get('userList',[UserController::class, 'index'])->middleware(['auth', 'verified'])->name('userList');
+Route::resource('users',UserController::class)->middleware(['auth', 'verified']);
 
 
 /*
