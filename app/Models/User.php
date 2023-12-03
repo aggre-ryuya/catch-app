@@ -4,6 +4,9 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasOne;
+
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
@@ -23,11 +26,22 @@ class User extends Authenticatable
     ];
 
 
+    public function scopeSearchUsers($query, $input = null)
+    {   
+        if (!empty($input)) {
+            return $query->where('name', 'like', $input . '%');
+        }
+    }
     /**
      * ユーザーの売上に紐づくデータを取得
      */
-    public function getStoreData(): HasMany
+    public function sale(): HasMany
     {
-        return $this->hasMany(Sale::class, 'users_id');
+        return $this->hasMany(Sale::class, 'users_id', 'id');
+    }
+
+    public function store(): BelongsTo
+    {
+        return $this->belongsTo(Store::class, 'stores_id', 'id');
     }
 }

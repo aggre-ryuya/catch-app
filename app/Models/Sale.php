@@ -18,11 +18,11 @@ class sale extends Model
         'customer_payment',
         'deleted_at',
     ];
-    public function getUserData(): BelongsTo
+    public function user(): BelongsTo
     {
         return $this->belongsTo(User::class, 'users_id', 'id');
     }
-    public function getStoreData(): BelongsTo
+    public function store(): BelongsTo
     {
         return $this->belongsTo(Store::class, 'stores_id', 'id');
     }
