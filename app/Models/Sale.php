@@ -17,6 +17,7 @@ class sale extends Model
         'stores_id',
         'customer_payment',
         'deleted_at',
+        'created_date',
     ];
     public function user(): BelongsTo
     {

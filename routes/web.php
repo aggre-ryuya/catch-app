@@ -8,6 +8,12 @@ use Inertia\Inertia;
 use App\Http\Controllers\UserController;
 
 Route::get('userList',[UserController::class, 'index'])->middleware(['auth', 'verified'])->name('userList');
+Route::get('userPay/getUser/{id}',[UserController::class, 'getUser'])->middleware(['auth', 'verified']);    
+Route::get('userPay/getUserSale/{id}',[UserController::class, 'getUserSale'])->middleware(['auth', 'verified']);    
+
+Route::post('userPay/userSaleCreate/',[UserController::class, 'userpaystore'])->middleware(['auth', 'verified'])->name('paystore');
+Route::post('userPay/userSaleUpdate/',[UserController::class, 'userpayupdate'])->middleware(['auth', 'verified'])->name('paystore');
+
 Route::resource('users',UserController::class)->middleware(['auth', 'verified']);
 
 
