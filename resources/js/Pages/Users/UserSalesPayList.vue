@@ -16,7 +16,7 @@ const formatData = (dateString) => {
 const emit = defineEmits(['sale-update']);
 
 const onUpdate = (saleId) => {
-    axios.get('/userPay/getUserSale/' + saleId)
+    axios.get('/user/userSalePay/' + saleId)
     .then(res => {
         emit('sale-update', res.data);
     })

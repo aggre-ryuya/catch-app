@@ -27,6 +27,7 @@ return Number(price).toLocaleString()
     <AuthenticatedLayout>
         <template #header>
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">ユーザー覧</h2>
+            <Link :href="route('user.Create')" >登録</Link>
         </template>
 
         <div class="lg:py-5 sm:py-2">
@@ -36,11 +37,11 @@ return Number(price).toLocaleString()
                     <section class="text-gray-600 body-font overflow-hidden">
                         <div class="my-5 flex items-center justify-center">
                             <div class="flex xl:flex-nowrap md:flex-nowrap lg:flex-wrap flex-wrap justify-center items-center md:justify-start">
-                                <div class="relative w-40 sm:w-auto xl:mr-4 lg:mr-0 sm:mr-4 mr-2">
+                                <!-- <div class="relative w-40 sm:w-auto xl:mr-4 lg:mr-0 sm:mr-4 mr-2">
                                     <input v-model="search" type="text" id="footer-field" name="footer-field" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:bg-transparent focus:ring-2 focus:ring-indigo-200 focus:border-indigo-500 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
-                                </div>
-                                <Link :href="route('users.index')" :data="{ search: search }" class="lg:mt-2 xl:mt-0 flex-shrink-0 inline-flex text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded" >検索</Link>
-                                <p>{{ search }}</p>
+                                </div> -->
+                                <!-- <Link :href="route('users.index')" :data="{ search: search }" class="lg:mt-2 xl:mt-0 flex-shrink-0 inline-flex text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded" >検索</Link>
+                                <p>{{ search }}</p> -->
                             </div>
                         </div>
 
@@ -58,7 +59,7 @@ return Number(price).toLocaleString()
                                             </span>
                                             {{storeName}}：{{pricePrefix(value)}}円
                                     </p>
-                                    <Link :href="route('users.show', { user: user.id })" class="flex items-center mt-auto text-white bg-gray-400 border-0 py-2 px-4 w-full focus:outline-none hover:bg-gray-500 rounded">詳細へ
+                                    <Link :href="route('user.show', {userId: user.id})" class="flex items-center mt-auto text-white bg-gray-400 border-0 py-2 px-4 w-full focus:outline-none hover:bg-gray-500 rounded">詳細へ
                                         <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-4 h-4 ml-auto" viewBox="0 0 24 24">
                                         <path d="M5 12h14M12 5l7 7-7 7"></path>
                                         </svg>
