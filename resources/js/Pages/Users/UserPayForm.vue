@@ -42,7 +42,7 @@ const allInputsFilled = computed(() => {
 // 登録
 const onCreate = () => {
     userSale.users_id = props.User.id;
-    axios.post('/userPay/userSaleCreate/', userSale)
+    axios.post('/user/storePay/', userSale)
     .then(res => {
         emit('sale-created');
         initUserSale();

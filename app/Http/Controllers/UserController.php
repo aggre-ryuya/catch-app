@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Validator;
 
 use App\Models\User;
 use App\Models\Store;
@@ -29,7 +29,7 @@ class UserController extends Controller
 
         $this->addStorePayAttribute($users);
 
-        return Inertia::render('UserList', ['users' => $users]);
+        return Inertia::render('Users/IndexUserList', ['users' => $users]);
     }
 
     /**
@@ -38,43 +38,43 @@ class UserController extends Controller
     public function create()
     {
         //
+        $stores = Store::all();
+        return Inertia::render('Users/UserCreate', ['Stores' => $stores]);
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreUserRequest $request)
+    public function store(Request $request)
     {
         //
-    }
+        $validator = Validator::make($request->all(), [
+            'name' => 'required',
+            'stores_id' => 'required',
+            'email' => 'required|unique:users,email',
+            'password' => 'required',
+            'role' => 'required|in:0,1',
+        ]);
+        if($validator->fails()){
+            return response()->json(['message' => '入力値エラー', 'errors' => $validator->errors()], 422);
+        }
+        
+        try{
+            User::create(request()->all());
+            return ['message'=> '登録成功', 'status' => '200'];
+        }catch(\Exception $e) {
+            return ['message'=> '失敗しました'];
 
-    public function userpaystore(Request $request)
-    {
-        $data = $request->all();
-        $sale = new Sale;
-        $sale->fill($data);
-        $sale->save();
+        }
     }
-
-    public function userpayupdate(Request $request)
-    {
-        $sale = Sale::find($request->id); 
-        // return $request; 
-        $sale->update([  
-            "users_id" => $request->users_id,  
-            "stores_id" => $request->stores_id,  
-            "customer_payment" => $request->customer_payment,  
-            "created_date" => $request->created_date,  
-            "deleted_at" => '0',
-        ]);  
     
-    }
     /**
      * Display the specified resource.
      */
-    public function show(User $user)
+    public function show($userId)
     {
-        $UserDetail = User::find($user->id);
+
+        $UserDetail = User::find($userId);
         $Stores = Store::all();
 
         // created_atの日付を 'Y-m-d' フォーマットに変換
@@ -84,30 +84,9 @@ class UserController extends Controller
             }
         }
 
-        return Inertia::render('Users/Index', ['User' => $UserDetail, 'Stores' => $Stores]);
+        return Inertia::render('Users/UserMainView', ['User' => $UserDetail, 'Stores' => $Stores]);
     }
 
-    public function getUser ($id)
-    {
-        $UserDetail = User::with(['sale' => function ($query) {
-            $query->where(DB::raw("DATE_FORMAT(created_date, '%Y-%m')"), '=', now()->format('Y-m'))
-                  ->orderBy('created_date', 'desc');
-        }, 'sale.store'])
-        ->find($id);
-
-        return $UserDetail;
-    }
-
-    public function getUserSale (Request $request, $id)
-    {
-        $sale = Sale::find($id);
-        return $sale;
-    }
-
-    
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit(User $user)
     {
         //
@@ -128,6 +107,50 @@ class UserController extends Controller
     {
         //
     }
+
+    public function getSalePayList ($id)
+    {
+        $UserDetail = User::with(['sale' => function ($query) {
+            $query->where(DB::raw("DATE_FORMAT(created_date, '%Y-%m')"), '=', now()->format('Y-m'))
+                  ->orderBy('created_date', 'desc');
+        }, 'sale.store'])
+        ->find($id);
+
+        return $UserDetail;
+    }
+
+    public function userPayStore(Request $request)
+    {
+        $data = $request->all();
+        $sale = new Sale;
+        $sale->fill($data);
+        $sale->save();
+    }
+
+    public function userpayupdate(Request $request)
+    {
+        $sale = Sale::find($request->id); 
+        // return $request; 
+        $sale->update([  
+            "users_id" => $request->users_id,  
+            "stores_id" => $request->stores_id,  
+            "customer_payment" => $request->customer_payment,  
+            "created_date" => $request->created_date,  
+            "deleted_at" => '0',
+        ]);  
+    
+    }
+
+    public function getUserSale (Request $request, $id)
+    {
+        $sale = Sale::find($id);
+        return $sale;
+    }
+    
+    /**
+     * Show the form for editing the specified resource.
+     */
+
 
     /**
      * 各ユーザーに店舗別売上属性を追加する
