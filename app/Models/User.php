@@ -22,6 +22,8 @@ class User extends Authenticatable
         'email',
         'email_verified_at',
         'password',
+        'commission',
+        'tax',
         'role',
         'deleted_at',
     ];

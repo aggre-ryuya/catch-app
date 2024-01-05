@@ -10,8 +10,6 @@ use Illuminate\Database\Eloquent\Model;
 class sale extends Model
 {
     use HasFactory;
-
-    use HasFactory;
     protected $fillable = [
         'users_id',
         'stores_id',
@@ -19,6 +17,7 @@ class sale extends Model
         'deleted_at',
         'created_date',
     ];
+    
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class, 'users_id', 'id');

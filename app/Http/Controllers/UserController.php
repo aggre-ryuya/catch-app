@@ -54,7 +54,10 @@ class UserController extends Controller
             'email' => 'required|unique:users,email',
             'password' => 'required',
             'role' => 'required|in:0,1',
+            'tax' => 'required|in:0,1',
+            'commission' => 'required|numeric',
         ]);
+
         if($validator->fails()){
             return response()->json(['message' => '入力値エラー', 'errors' => $validator->errors()], 422);
         }

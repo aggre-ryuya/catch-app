@@ -1,19 +1,28 @@
 <?php
 
 namespace App\Http\Controllers;
+use Illuminate\Http\Request;
 
 use App\Http\Requests\StoresaleRequest;
 use App\Http\Requests\UpdatesaleRequest;
-use App\Models\sale;
+use App\Models\Sale;
 
+use Illuminate\Support\Facades\DB;
 class SaleController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index($id)
     {
-        //
+        $result = Sale::select('stores_id', DB::raw('SUM(customer_payment) as total_payment'))
+        ->where('users_id', $id)
+        ->groupBy('stores_id')
+        ->orderBy('stores_id')
+        ->get();
+
+
+        return $result;
     }
 
     /**
