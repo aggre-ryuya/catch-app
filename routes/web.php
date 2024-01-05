@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\SaleController;
 
 Route::get('userList',[UserController::class, 'index'])->middleware(['auth', 'verified'])->name('UserLists');   
 
@@ -17,10 +18,9 @@ Route::post('user/storePay/',[UserController::class, 'userPayStore'])->middlewar
 Route::post('user/userStore',[UserController::class, 'store'])->middleware(['auth', 'verified']);
 
 Route::post('userPay/userSaleUpdate/',[UserController::class, 'userpayupdate'])->middleware(['auth', 'verified'])->name('paystore');
-// Route::post('userPay/userStore/',[UserController::class, 'store'])->middleware(['auth', 'verified'])->name('userStore');
 
-// Route::resource('users',UserController::class)->middleware(['auth', 'verified']);
 
+Route::get('user/totalpay/{id}',[SaleController::class, 'index'])->middleware(['auth', 'verified'])->name('totalpay');    
 
 /*
 |--------------------------------------------------------------------------

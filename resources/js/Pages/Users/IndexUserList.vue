@@ -25,9 +25,11 @@ return Number(price).toLocaleString()
     <Head title="ユーザ一覧" />
 
     <AuthenticatedLayout>
-        <template #header>
-            <h2 class="font-semibold text-xl text-gray-800 leading-tight">ユーザー覧</h2>
-            <Link :href="route('user.Create')" >登録</Link>
+        <template #header >
+            <div class="flex items-center justify-between" >
+                <h2 class="font-semibold text-xl text-gray-800 leading-tight">ユーザー覧</h2>
+                <Link as="button" class="font-bold border-2 border-black rounded-lg p-2 " :href="route('user.Create')" >キャッチ登録</Link>
+            </div>
         </template>
 
         <div class="lg:py-5 sm:py-2">
@@ -35,17 +37,6 @@ return Number(price).toLocaleString()
                 <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
 
                     <section class="text-gray-600 body-font overflow-hidden">
-                        <div class="my-5 flex items-center justify-center">
-                            <div class="flex xl:flex-nowrap md:flex-nowrap lg:flex-wrap flex-wrap justify-center items-center md:justify-start">
-                                <!-- <div class="relative w-40 sm:w-auto xl:mr-4 lg:mr-0 sm:mr-4 mr-2">
-                                    <input v-model="search" type="text" id="footer-field" name="footer-field" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:bg-transparent focus:ring-2 focus:ring-indigo-200 focus:border-indigo-500 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
-                                </div> -->
-                                <!-- <Link :href="route('users.index')" :data="{ search: search }" class="lg:mt-2 xl:mt-0 flex-shrink-0 inline-flex text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded" >検索</Link>
-                                <p>{{ search }}</p> -->
-                            </div>
-                        </div>
-
-
                         <div class="flex flex-wrap -m-4"    >
                             <div v-for="user in users" :key="user.id" class="p-10 xl:w-4/12 md:w-1/2 w-full mx-auto">
 
