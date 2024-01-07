@@ -127,34 +127,45 @@ const formatData = (dateString) => {
                     <input v-model="userSale.customer_payment" type="text" name="pay" id="pay" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
                     <label for="pay" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">金額</label>
                 </div>
-                <div class="flex justify-end">
+                <div class="flex justify-around items-center">
                     
-                <div v-if="condition">
-                    <button @click="onCreate"
-                            :disabled="!allInputsFilled"
-                            class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-                            :class="{ 'bg-gray-400 cursor-not-allowed': !allInputsFilled }">
+                    <button
+                        v-if="condition"
+                        @click="onCreate"
+                        :disabled="!allInputsFilled"
+                        class="bg-gray-300 rounded-lg"
+                        :class="{ ' bg-blue-200 cursor-not-allowed': !allInputsFilled }">
                         登録
                     </button>
-                </div>
-
-                <div v-else>
-                    <button @click="onUpdate"
-                            :disabled="!allInputsFilled"
-                            class="text-white bg-yellow-300 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-                            :class="{ 'bg-gray-400 cursor-not-allowed': !allInputsFilled }">
+                    <button 
+                        v-if="!condition"
+                        @click="onUpdate"
+                        :disabled="!allInputsFilled"
+                        :class="{ 'bg-gray-400 cursor-not-allowed': !allInputsFilled }">
                         編集
                     </button>
-                    <button @click="onClear"
-                            :disabled="!allInputsFilled"
-                            class=" text-white bg-yellow-300 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full ml-5 sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-                            :class="{ 'bg-gray-400 cursor-not-allowed': !allInputsFilled }">
+                    <button 
+                        v-if="!condition"
+                        @click="onClear"
+                        :disabled="!allInputsFilled"
+                        :class="{ 'bg-gray-400 cursor-not-allowed': !allInputsFilled }">
                         クリア
                     </button>
-                </div>
-                    <button @click="onBackupState" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 ml-5">戻る</button>
+                    <button 
+                        @click="onBackupState" 
+                        class="bg-blue-200 rounded-lg">
+                        戻る
+                    </button>
                 </div>
             </form>
         </div>
     </section>
 </template> 
+<style scoped>
+      button {
+        display: inline-block;
+        width: 40%;
+        font-weight: bold;
+        padding: 5px 0;
+      }
+</style>
