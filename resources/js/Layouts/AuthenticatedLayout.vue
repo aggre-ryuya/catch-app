@@ -8,6 +8,10 @@ import ResponsiveNavLink from '@/Components/ResponsiveNavLink.vue';
 import { Link } from '@inertiajs/vue3';
 
 const showingNavigationDropdown = ref(false);
+
+const toggleNavigation = () => {
+    showingNavigationDropdown.value = !showingNavigationDropdown.value;
+}
 </script>
 
 <template>
@@ -110,37 +114,38 @@ const showingNavigationDropdown = ref(false);
                     </div>
                 </div>
 
-                <!-- Responsive Navigation Menu -->
-                <div
-                    :class="{ block: showingNavigationDropdown, hidden: !showingNavigationDropdown }"
-                    class="sm:hidden"
-                >
-                    <div class="pt-2 pb-3 space-y-1">
-                        <ResponsiveNavLink :href="route('dashboard')" :active="route().current('dashboard')">
-                            Dashboard
-                        </ResponsiveNavLink>
-                        <ResponsiveNavLink :href="route('UserLists')" :active="route().current('UserLists')">
-                            ユーザ一覧
-                        </ResponsiveNavLink>
-                    </div>
+              <!-- Responsive Navigation Menu -->
+<div :class="{ block: showingNavigationDropdown, hidden: !showingNavigationDropdown }" class="sm:hidden fixed inset-0 z-50 bg-black bg-opacity-50" @click="toggleNavigation">
+    <div class="flex items-center justify-center h-full">
+        <div class="bg-white w-64 p-4 rounded-md shadow-md">
+            <!-- Responsive Navigation Links -->
+            <div class="mb-2">
+                <ResponsiveNavLink :href="route('dashboard')" :active="route().current('dashboard')">
+                    Dashboard
+                </ResponsiveNavLink>
+                <ResponsiveNavLink :href="route('UserLists')" :active="route().current('UserLists')">
+                    ユーザ一覧
+                </ResponsiveNavLink>
+            </div>
 
-                    <!-- Responsive Settings Options -->
-                    <div class="pt-4 pb-1 border-t border-gray-200">
-                        <div class="px-4">
-                            <div class="font-medium text-base text-gray-800">
-                                {{ $page.props.auth.user.name }}
-                            </div>
-                            <div class="font-medium text-sm text-gray-500">{{ $page.props.auth.user.email }}</div>
-                        </div>
-
-                        <div class="mt-3 space-y-1">
-                            <ResponsiveNavLink :href="route('profile.edit')"> Profile </ResponsiveNavLink>
-                            <ResponsiveNavLink :href="route('logout')" method="post" as="button">
-                                Log Out
-                            </ResponsiveNavLink>
-                        </div>
-                    </div>
+            <!-- Responsive Settings Options -->
+            <div class="border-t border-gray-200 pt-4">
+                <div class="text-base font-medium text-gray-800">
+                    {{ $page.props.auth.user.name }}
                 </div>
+                <div class="text-sm font-medium text-gray-500">{{ $page.props.auth.user.email }}</div>
+
+                <div class="mt-2 space-y-1">
+                    <ResponsiveNavLink :href="route('profile.edit')"> Profile </ResponsiveNavLink>
+                    <ResponsiveNavLink :href="route('logout')" method="post" as="button">
+                        Log Out
+                    </ResponsiveNavLink>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
             </nav>
 
             <!-- Page Heading -->
